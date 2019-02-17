@@ -1,11 +1,8 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 import sys
 import array
-# import numpy as np
-import Board
-
-# Информация про ноду 
-# Хранит в себе состояние
-#
 
 # Расчет расстояния для конкретной плитки
 def ManhattanScore(curr_state, size, finish_y, finish_x, y, x):
@@ -53,58 +50,3 @@ def ManhattanDistance(curr_state, size):
 					finish_y = (i - 1) // size
 					finish_x = (i - 1) - finish_y * size
 					total_score += ManhattanScore(curr_state, size, finish_y, finish_x, y, x)
-
-
-		
-
-def Linear_Conflict_Manhattan_Distance(state):
-	pass
-	# манхэттенское расстояние + количество линейных конфликтов умноженных на 2
-
-
-
-
-
-class Node():
-	def __init__(self, parent, move, g, h, edge):
-		# distance from start node
-		self.g_cost = g
-		# distance from end node
-		self.h_cost = h
-
-		self.edge 	= edge
-
-		# доска родитель(просто строка).
-		# Вся эта схема нужна для того, чтобы сформировать граф от конца к началу
-		# создаем dict всех возможных состояний в таком виде
-		# строка - ключ
-		# Node - значение
-		# {state: Node}
-		self.parent = parent
-		# текущее состояние доски(просто строка)
-		self.state 	= copy.copy(parent, move, edge)
-
-
-	def getF(self):
-		pass
-
-	def getG(self):
-		return self.g
-
-	def setG(self, g):
-		self.g = g
-
-	def getH(self):
-		return self.h
-		
-	def setH(self, h):
-		return self.h
-
-	def getParent(self):
-		return self.parent
-
-	def setParent(self, parent):
-		self.parent = parent
-
-	def equals(self, state):
-		return false

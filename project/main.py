@@ -1,12 +1,19 @@
+# !/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 import sys
-# import numpy as np
 
-import	Info
-import 	Node
-import	AStar
-import 	Board
+from algorithm.AStar import AStar
 
-# export PATH=~/miniconda3/bin:$PATH
+from src.Board import Board
+from src.Info import Info
+from src.Node import Node
+
+from metrics.HammingDistance import HammingDistance
+from metrics.LinearConflicts import LinearConflicts
+from metrics.ManhattanDistance import ManhattanDistance
+
+
 edge = 5
 
 if __name__ == "__main__":
@@ -26,7 +33,7 @@ if __name__ == "__main__":
 
 
 
-	logic = Board.Board()
+	logic = Board()
 
 	prompt_str = "choice move[up; down; left; right]: "
 	while not logic.finished(a_board):
@@ -36,6 +43,7 @@ if __name__ == "__main__":
 
 
 		move = input(prompt_str)
+
 		if logic.check_move(a_board, move, edge):
 			logic.make_move(a_board, move, edge)
 			prompt_str = "choice move[up; down; left; right]: "

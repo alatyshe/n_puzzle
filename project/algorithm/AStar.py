@@ -1,8 +1,10 @@
-import sys
-# import numpy as np
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
-import	Info
-import	Node
+import sys
+
+sys.path.append('..')
+from src import Info, Node, Board
 
 class AStar():
 	def __init__(self, start_node, logic_game, edge):

@@ -1,5 +1,7 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 import sys
-# import numpy as np
 
 class Info():
 	def __init__(self):

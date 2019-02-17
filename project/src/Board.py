@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 import sys
 import copy
 
@@ -18,6 +21,7 @@ class Board():
 	def check_move(board, move, edge):
 		empty_index = board.index(0)
 
+		print("move : ", move)
 		y = empty_index // edge
 		x = empty_index % edge
 		if move == "up" and y - 1 >= 0:
