@@ -8,33 +8,34 @@ from algorithm.AStar import AStar
 from src.Board import Board
 from src.Info import Info
 from src.Node import Node
+from src.Parser import Parser
 
 from metrics.HammingDistance import HammingDistance
 from metrics.LinearConflicts import LinearConflicts
 from metrics.ManhattanDistance import ManhattanDistance
 
 
-edge = 5
-
 if __name__ == "__main__":
+	try:
+		if len(sys.argv) > 1:
+			file = open(sys.argv[1], "r")
+			puzzle_string = file.read()
 
-	edge = 4
-	a_board = [
-		10,  6,  4,  8,
-		2,  1,  7, 15,
-		9, 11,  3, 12,
-		13,  5,  0, 14]
+			board = Parser.parse_string(puzzle_string)
 
-	a_board = [
-		1,  2,  3,  4,
-		5,  6,  7, 8,
-		9, 10,  0, 12,
-		13,  14,  11, 15]
+			# print(board)
 
 
+		else :
+			print("Usage:\n\tmain.py puzzle.txt")
+	except Exception as error:
+		print(error)
 
-	logic = Board()
 
+
+	logic = Board(board[1], board[0])
+	a_board = board[1]
+	edge = board[0]
 	prompt_str = "choice move[up; down; left; right]: "
 	while not logic.finished(a_board):
 		for i in range(edge):
@@ -53,5 +54,5 @@ if __name__ == "__main__":
 		
 	# node = Node.Node(None)
 	# info = Info.Info()
-	algorithm = AStar.AStar()
+	# algorithm = AStar()
 

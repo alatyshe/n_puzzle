@@ -5,5 +5,5 @@
 *.pyc
 *.so
 build/
-__pycache__/
+__pycache*
 .DS_*
