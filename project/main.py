@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import sys
+import numpy
 
 from algorithm.AStar import AStar
 
@@ -24,7 +25,10 @@ if __name__ == "__main__":
 			board = Parser.parse_string(puzzle_string)
 
 			# print(board)
+			# n = board[0]
+			# final_arr = [[x for x in range(n * y + 1,n * y + n + 1)] for y in range(n)]
 
+			# print(final_arr)
 
 		else :
 			print("Usage:\n\tmain.py puzzle.txt")
@@ -33,23 +37,23 @@ if __name__ == "__main__":
 
 
 
-	logic = Board(board[1], board[0])
-	a_board = board[1]
-	edge = board[0]
-	prompt_str = "choice move[up; down; left; right]: "
-	while not logic.finished(a_board):
-		for i in range(edge):
-			print (" | ".join('%02s' % i for i in a_board[i * edge : (i + 1) * edge]))
-			print ("- " * ((edge + 1) * 2))
+	# logic = Board(board[1], board[0])
+	# a_board = board[1]
+	# edge = board[0]
+	# prompt_str = "choice move[up; down; left; right]: "
+	# while not logic.finished(a_board):
+	# 	for i in range(edge):
+	# 		print (" | ".join('%02s' % i for i in a_board[i * edge : (i + 1) * edge]))
+	# 		print ("- " * ((edge + 1) * 2))
 
 
-		move = input(prompt_str)
+	# 	move = input(prompt_str)
 
-		if logic.check_move(a_board, move, edge):
-			logic.make_move(a_board, move, edge)
-			prompt_str = "choice move[up; down; left; right]: "
-		else:
-			prompt_str = "invalid move [" + move + "] try again : "
+	# 	if logic.check_move(a_board, move, edge):
+	# 		logic.make_move(a_board, move, edge)
+	# 		prompt_str = "choice move[up; down; left; right]: "
+	# 	else:
+	# 		prompt_str = "invalid move [" + move + "] try again : "
 
 		
 	# node = Node.Node(None)

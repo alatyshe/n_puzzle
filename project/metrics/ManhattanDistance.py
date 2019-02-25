@@ -13,6 +13,7 @@ def ManhattanScore(curr_state, size, finish_y, finish_x, y, x):
 			[0,0,0,0],
 			[0,0,0,0]
 	]
+	
 	calculate_state[finish_y][finish_x] = 1
 	while calculate_state[y][x] == 0:
 		for y in range(size):
@@ -37,9 +38,9 @@ def ManhattanDistance(curr_state, size):
 	# final state of our board
 	final_state = [
 			[1, 2, 3, 4],
-			[5, 6, 7, 8],
-			[9,10,11,12],
-			[13,14,15,0]
+			[12,13,14,5],
+			[11, 0,15,6],
+			[10, 9, 8,7]
 	]
 
 	# total tiles
@@ -52,3 +53,14 @@ def ManhattanDistance(curr_state, size):
 					total_score += ManhattanScore(curr_state, size, finish_y, finish_x, y, x)
 
 	return total_score
+
+# # final state of our board
+# final_state = [
+# 	[[1,   1], [2,  2], [3,   3], [4,  4],
+	
+# 	[[5,  12], [6, 13], [7,  14], [8,  5],
+
+# 	[[9,  11], [10, 0], [11, 15], [12, 6],
+	
+# 	[[13, 10], [14, 9], [15,  8], [0,  7]]
+# ]
