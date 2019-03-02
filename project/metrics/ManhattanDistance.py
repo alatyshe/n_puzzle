@@ -3,16 +3,13 @@
 
 import sys
 import array
+from src.BoardLogic import BoardLogic
 
-# https://algorithmsinsight.wordpress.com/graph-theory-2/a-star-in-general/implementing-a-star-to-solve-n-puzzle/
 # Calculate distance for single tile
+# https://algorithmsinsight.wordpress.com/graph-theory-2/a-star-in-general/implementing-a-star-to-solve-n-puzzle/
 def ManhattanScore(curr_state, size, finish_y, finish_x, y, x):
-	calculate_state = [
-			[0,0,0,0],
-			[0,0,0,0],
-			[0,0,0,0],
-			[0,0,0,0]
-	]
+
+	calculate_state = [[0 for i in range(size)] for i in range(size)]
 	
 	calculate_state[finish_y][finish_x] = 1
 	while calculate_state[y][x] == 0:
@@ -32,17 +29,8 @@ def ManhattanScore(curr_state, size, finish_y, finish_x, y, x):
 
 # Calculate distancescore for all board
 # input: board and board_size
-def ManhattanDistance(curr_state, size):
+def ManhattanDistance(curr_state, final_state, size):
 	total_score = 0
-
-	# final state of our board
-	final_state = [
-			[1, 2, 3, 4],
-			[12,13,14,5],
-			[11, 0,15,6],
-			[10, 9, 8,7]
-	]
-
 	# total tiles
 	for i in range(size * size - 1):
 		for y in range(size):

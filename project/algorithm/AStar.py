@@ -2,19 +2,36 @@
 # -*- coding: utf-8 -*-
 
 import sys
+import queue as Q
 
 sys.path.append('..')
-from src import Info, Node, Board
+from src import Info, Node, BoardLogic
 
 class AStar():
-	def __init__(self, start_node, logic_game, edge):
-		self.start_node = start_node
-		self.logic = logic_game
-		self.edge = edge
+	def __init__(self, metric, start_state, size):
+		# function
+		self.metric = metric
 
-	# def search(self, start_node):
-	# 	open_nodes = {}
-	# 	closed_nodes = {}
+
+		# 1d array
+		print(start_state)
+		self.start_state = start_state
+		self.final_state = BoardLogic.create_puzzle(size)
+		self.size = size
+
+		# dict string_board : Node
+		self.all_nodes = {}
+
+		# A priority queue tuple
+		self.open_nodes = {}
+
+		self.closed_nodes = {}
+
+	def search(self):
+		
+		open_nodes = {}
+		# 
+		closed_nodes = {}
 
 	# 	open_nodes.append(start_node)
 	# 	moves = ["up", "down", "left", "right"]
