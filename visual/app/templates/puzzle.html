@@ -1,0 +1,61 @@
+<html>
+	<head>
+		<title>{{ title }}</title>
+        <style>
+            :root {
+                --width: 100px;
+                --border: 2px;
+                --margin: 5px;
+                --size: {{ size }};
+            }
+
+            body {
+                margin-left: auto;
+                margin-right: auto;
+                display: table;
+            }
+
+            div {
+                margin-top: 20px;
+                width: calc(calc(var(--width) + calc(calc(var(--border) + var(--margin))*2))*var(--size));
+                border: solid 1px transparent;
+            }
+
+            div > div {
+                display: inline-block;
+                width: var(--width);
+                height: var(--width);
+                border: solid var(--border) gray;
+                margin: var(--margin);
+                text-align: center;
+                font: bold 24px/100px Tahoma,sans;
+                border-radius: 10px;
+                background-color: whitesmoke;
+            }
+
+            #move {
+                display: none;
+                height: calc(var(--width)*2px);
+                text-align: center;
+                font: bold 42px Tahoma,sans;
+                color: aqua;
+                letter-spacing: 3px;
+                text-transform: uppercase;
+
+                -webkit-text-stroke-width: 1px;
+                -webkit-text-stroke-color: black;
+            }
+        </style>
+	</head>
+	<body>
+        <script id="searcher"
+                data-json='{
+                    "size": {{ size }},
+                    "elements": {{ elements }},
+                    "move": {{ move }}
+                }'
+                type="text/javascript" src="{{url_for('static', filename='puzzle.js')}}">
+        </script>
+        <div id="move"></div>
+	</body>
+</html>
