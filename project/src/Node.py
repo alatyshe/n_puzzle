@@ -10,7 +10,7 @@ import metrics.LinearConflicts
 import metrics.HammingDistance
 
 class Node():
-	def __init__(self, parent_state, current_state, num_move, metric_value):
+	def __init__(self, parent_state, current_state, num_move, move, metric_value):
 		# distance from start node(total number of moves)
 		self.g_cost = num_move
 		# our metric
@@ -18,12 +18,8 @@ class Node():
 		# Total value
 		self.f_cost = self.g_cost + self.h_cost
 
-		# доска родитель(просто строка).
-		# Вся эта схема нужна для того, чтобы сформировать граф от конца к началу
-		# создаем dict всех возможных состояний в таком виде
-		# строка - ключ
-		# Node - значение
-		# {state: Node}
+		self.move = move
+
 		self.parent_state_string = ' '.join(str(i) for i in parent_state)
 
 		self.current_state = current_state
@@ -41,6 +37,9 @@ class Node():
 	def getH(self):
 		return self.h_cost
 	
+	def getMove(self):
+		return self.move
+
 	def getState(self):
 		return self.current_state
 

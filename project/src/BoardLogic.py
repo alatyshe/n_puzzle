@@ -85,6 +85,3 @@ class BoardLogic():
 	@staticmethod
 	def finished(current_state, final_state):
 		return current_state == final_state;
-
-
-

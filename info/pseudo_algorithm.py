@@ -69,3 +69,8 @@ While (opened != empty) and  (succes == false) do
 
 
 							
+
+
+1 2 3 8 0 4 7 5 6
+
+1 2 3 8 0 4 7 6 5

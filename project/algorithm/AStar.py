@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import sys
+import time
 import queue as Q
 
 sys.path.append('..')
@@ -22,30 +23,33 @@ class AStar():
 		self.all_nodes = {}
 		self.closed_nodes = {}
 
-		# A priority queue tuple (value, Node)
+		# A priority queue tuple (value, string_state)
+		# https://www.bogotobogo.com/python/python_PriorityQueue_heapq_Data_Structure.php
 		self.open_nodes = Q.PriorityQueue()
 
 		self.curr_node = Node(
 				parent_state=[],
 				current_state=start_state,
 				num_move=0,
+				move="",
 				metric_value=self.metric(start_state, self.final_state, self.size)
 				)
 
-		
-
 	def search(self):
 		moves = ["UP", "DOWN", "LEFT", "RIGHT"]
+		max_size = 1
+		curr_size = 1
 
 		self.open_nodes.put((self.curr_node.getF(), self.curr_node.getStateString()))
 		self.all_nodes[self.curr_node.getStateString()] = self.curr_node
 
+		start = time.time()
 		while not self.open_nodes.empty():
 			# Node
 			self.curr_node = self.all_nodes[self.open_nodes.get()[1]]
+			curr_size -= 1
 			self.closed_nodes[self.curr_node.getStateString()] = self.curr_node
 
-			print(self.curr_node.getStateString())
 			if self.curr_node.getStateString() == self.final_state_string:
 				break;
 
@@ -55,38 +59,30 @@ class AStar():
 					next_state_string = ' '.join(str(i) for i in next_state)
 					if next_state_string not in self.closed_nodes:
 						metric_value = self.metric(self.curr_node.getState(), self.final_state, self.size)
-
 						new_node = Node(
 								parent_state=self.curr_node.getState(),
 								current_state=next_state,
 								num_move=self.curr_node.getG() + 1,
+								move=move,
 								metric_value=self.metric(self.curr_node.getState(), self.final_state, self.size)
 								)
 						self.all_nodes[new_node.getStateString()] = new_node
 						self.open_nodes.put((new_node.getF(), new_node.getStateString()))
-			# print("closed_nodes : \n", self.closed_nodes)
-			# print("all_nodes : \n", self.all_nodes)
-			# print("\n\n\n")
+						curr_size += 1
+						if max_size <= curr_size:
+							max_size = curr_size
 
 		path = []
-		while self.curr_node.getParentString() != "":
-			path.append(self.curr_node)
+		while self.curr_node.getMove() != "":
+			path.append([self.curr_node.getMove(), self.curr_node.getStateString()])
 			self.curr_node = self.all_nodes[self.curr_node.getParentString()]
+		path.append([self.curr_node.getMove(), self.curr_node.getStateString()])
 
-
-
-
-
-	# 	open_nodes.append(start_node)
-	# 	moves = ["up", "down", "left", "right"]
-
-
-		# while True:
-			# if 
-
-	# 		min_value_board = min(open_nodes, key=open_nodes.get)
-
-	# 		for move in moves:
-	# 			if logic.check_move():
-	# 				new_node = Node(min_value_board, move, )
-	# 				# open_nodes[]
+		res = {
+			"Opened_nodes": len(self.all_nodes),
+			"Max_states": max_size,
+			"Path": path,
+			"Move_num": len(path),
+			"Time_spend": time.time() - start
+		}
+		return (res)

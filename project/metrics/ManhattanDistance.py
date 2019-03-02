@@ -41,14 +41,3 @@ def ManhattanDistance(curr_state, final_state, size):
 					total_score += ManhattanScore(curr_state, size, finish_y, finish_x, y, x)
 
 	return total_score
-
-# # final state of our board
-# final_state = [
-# 	[[1,   1], [2,  2], [3,   3], [4,  4],
-	
-# 	[[5,  12], [6, 13], [7,  14], [8,  5],
-
-# 	[[9,  11], [10, 0], [11, 15], [12, 6],
-	
-# 	[[13, 10], [14, 9], [15,  8], [0,  7]]
-# ]
