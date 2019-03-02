@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import sys
+import queue as Q
 # import numpy
 
 from algorithm.AStar import AStar
@@ -25,9 +26,36 @@ if __name__ == "__main__":
 		board = Parser.parse_string(puzzle_string)
 
 		algorithm = AStar(
-					metric=ManhattanDistance, 
+					metric=HammingDistance, 
 					start_state=board["state"], 
+					final_state=board["final_state"], 
 					size=board["size"])
+
+
+		algorithm.search()
+
+		# priority_open_nodes = Q.PriorityQueue()
+
+		# moves = ["UP", "DOWN", "LEFT", "RIGHT"]
+
+
+		# board_value = HammingDistance(board["state"], board["final_state"], board["size"])
+		# next_state_string = ' '.join(str(i) for i in board["state"])
+
+		# priority_open_nodes.put((board_value, next_state_string))
+		# for move in moves:
+		# 	if BoardLogic.check_move(board["state"], move, board["size"]):
+		# 		board_value = HammingDistance(board["state"], board["final_state"], board["size"])
+		# 		next_state = BoardLogic.make_move(board["state"], move, board["size"])
+		# 		next_state_string = ' '.join(str(i) for i in next_state)
+		# 		priority_open_nodes.put((board_value, next_state_string))
+
+		# while not priority_open_nodes.empty():
+		# 	value_board = priority_open_nodes.get()
+		# 	print(value_board[0])
+		# 	print(value_board[1])
+		# 	print()
+			# print(priority_open_nodes.get())
 		# n = board[0]
 		# final_arr = [[x for x in range(n * y + 1,n * y + n + 1)] for y in range(n)]
 

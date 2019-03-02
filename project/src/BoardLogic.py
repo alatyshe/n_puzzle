@@ -5,7 +5,7 @@ import sys
 import copy
 
 class BoardLogic():
-	def __init__(self, board, size):
+	def __init__():
 		pass
 
 	@staticmethod
@@ -43,46 +43,48 @@ class BoardLogic():
 		return final_arr
 
 	@staticmethod
-	def check_move(board, move, size):
-		# board = 1d array
-		empty_index = board.index(0)
+	def check_move(current_state, move, size):
+		# current_state = 1d array
+		empty_index = current_state.index(0)
 
 		y = empty_index // size
 		x = empty_index % size
-		if move == "w" and y - 1 >= 0:
+		if move == "UP" and y - 1 >= 0:
 			return True
-		elif move == "s" and y + 1 < size:
+		elif move == "DOWN" and y + 1 < size:
 			return True
-		elif move == "a" and x - 1 >= 0:
+		elif move == "LEFT" and x - 1 >= 0:
 			return True
-		elif move == "d" and x + 1 < size:
+		elif move == "RIGHT" and x + 1 < size:
 			return True
 		return False
 
 
 	@staticmethod
-	def make_move(board, move, size):
-		# board = 1d array
-		empty_index = board.index(0)
+	def make_move(current_state, move, size):
+		# current_state = 1d array
+		next_state = current_state.copy()
+		empty_index = next_state.index(0)
 
 		y = empty_index // size
 		x = empty_index % size
-		if move == "w":
-			board[y * size + x] = board[(y - 1) * size + x]
-			board[(y - 1) * size + x] = 0
-		elif move == "s":
-			board[y * size + x] = board[(y + 1) * size + x]
-			board[(y + 1) * size + x] = 0
-		elif move == "a":
-			board[y * size + x] = board[y * size + x - 1]
-			board[y * size + x - 1] = 0
-		elif move == "d":
-			board[y * size + x] = board[y * size + x + 1]
-			board[y * size + x + 1] = 0
+		if move == "UP":
+			next_state[y * size + x] = next_state[(y - 1) * size + x]
+			next_state[(y - 1) * size + x] = 0
+		elif move == "DOWN":
+			next_state[y * size + x] = next_state[(y + 1) * size + x]
+			next_state[(y + 1) * size + x] = 0
+		elif move == "LEFT":
+			next_state[y * size + x] = next_state[y * size + x - 1]
+			next_state[y * size + x - 1] = 0
+		elif move == "RIGHT":
+			next_state[y * size + x] = next_state[y * size + x + 1]
+			next_state[y * size + x + 1] = 0
+		return next_state
 
 	@staticmethod
-	def finished(board_input, board_final):
-		return board_input == board_final;
+	def finished(current_state, final_state):
+		return current_state == final_state;
 
 
 

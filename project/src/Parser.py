@@ -61,7 +61,6 @@ class Parser(object):
 						input_state[i] != 0 and\
 						input_state[j] != 0:
 					inversions += 1
-
 		return inversions
 
 	@staticmethod
@@ -123,6 +122,7 @@ class Parser(object):
 		if inversions % 2 != 0:
 			raise ValueError(f"Error, Puzzle is unsolvable")	
 		return {"size" : size, 
-						"state" : input_state}
+						"state" : input_state,
+						"final_state" : BoardLogic.create_puzzle(size)}
 
 	
