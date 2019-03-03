@@ -5,49 +5,6 @@ import sys
 import copy
 from .BoardLogic import BoardLogic
 
-def getIndex( matrix, digit ):
-		for row, j in enumerate( matrix ):
-				for column,l in enumerate( j ):
-						if l == digit:
-								return row
-def inversion( State ):
-		lst_goal = []
-		lst = []
-		for row, j in enumerate( State ):
-				for column, l in enumerate( j ):
-						if l == 0:
-								pass
-						else:
-								lst.append(l)
-		for row, j in enumerate( State ):
-				for column, l in enumerate(j):
-						if l == 0:
-								pass
-						else:
-								lst_goal.append(l)
-		inv_count = 0
-		for comp in lst_goal:
-				del lst[0]
-				for itera in lst:
-						if (comp > itera):
-								inv_count += 1
-		return inv_count
-def isSolvable( startState, goalState ):
-		size = len(startState)
-		inv = 0
-		inv += inversion( startState )
-		inv += inversion( goalState )
-		if size % 2 == 0:
-				inv += getIndex(startState, 0)
-				inv += getIndex(goalState, 0)
-
-		print("inv : ", inv)
-		if not inv % 2 == 0:
-				return False
-		return True
-# isSolvable(input_state, final_state)
-
-
 class Parser(object):
 	def __init__(self):
 		pass
@@ -61,7 +18,6 @@ class Parser(object):
 						input_state[i] != 0 and\
 						input_state[j] != 0:
 					inversions += 1
-
 		return inversions
 
 	@staticmethod
@@ -111,18 +67,18 @@ class Parser(object):
 			if sorted_input[i] >= sorted_input[i+1]:
 				raise ValueError(f"Error, Invalid line: repeated numbers")
 
-
 		# check invariant
 		# http://www.cs.bham.ac.uk/~mdr/teaching/modules04/java2/TilesSolvability.html
 		final_state = BoardLogic.create_puzzle(size)
 		inversions = Parser.inversions(input_state, size)
+		inversions += Parser.inversions(final_state, size)
 		if size % 2 == 0:
-			inversions += Parser.inversions(final_state, size)
 			inversions += final_state.index(0) // size
 			inversions += input_state.index(0) // size
 		if inversions % 2 != 0:
 			raise ValueError(f"Error, Puzzle is unsolvable")	
 		return {"size" : size, 
-						"state" : input_state}
+						"state" : input_state,
+						"final_state" : BoardLogic.create_puzzle(size)}
 
 	

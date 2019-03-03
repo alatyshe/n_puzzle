@@ -10,45 +10,41 @@ import metrics.LinearConflicts
 import metrics.HammingDistance
 
 class Node():
-	def __init__(self, parent, move, g, h, edge):
-		# distance from start node
-		self.g_cost = g
-		# distance from end node
-		self.h_cost = h
+	def __init__(self, parent_state, current_state, num_move, move, metric_value):
+		# distance from start node(total number of moves)
+		self.g_cost = num_move
+		# our metric
+		self.h_cost = metric_value
+		# Total value
+		self.f_cost = self.g_cost + self.h_cost
 
-		self.edge 	= edge
+		self.move = move
 
-		# доска родитель(просто строка).
-		# Вся эта схема нужна для того, чтобы сформировать граф от конца к началу
-		# создаем dict всех возможных состояний в таком виде
-		# строка - ключ
-		# Node - значение
-		# {state: Node}
-		self.parent = parent
-		# текущее состояние доски(просто строка)
-		self.state 	= copy.copy(parent, move, edge)
+		self.parent_state_string = ' '.join(str(i) for i in parent_state)
 
+		self.current_state = current_state
+		self.current_state_string = ' '.join(str(i) for i in current_state)
+
+	def __cmp__(self, other):
+		return cmp(self.f_cost, other.getF())
 
 	def getF(self):
-		pass
+		return self.f_cost
 
 	def getG(self):
-		return self.g
-
-	def setG(self, g):
-		self.g = g
+		return self.g_cost
 
 	def getH(self):
-		return self.h
-		
-	def setH(self, h):
-		return self.h
+		return self.h_cost
+	
+	def getMove(self):
+		return self.move
 
-	def getParent(self):
-		return self.parent
+	def getState(self):
+		return self.current_state
 
-	def setParent(self, parent):
-		self.parent = parent
+	def getStateString(self):
+		return self.current_state_string
 
-	def equals(self, state):
-		return false
+	def getParentString(self):
+		return self.parent_state_string
