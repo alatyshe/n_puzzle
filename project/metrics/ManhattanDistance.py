@@ -3,42 +3,81 @@
 
 import sys
 import array
+import numpy as np
 from src.BoardLogic import BoardLogic
 
 # Calculate distance for single tile
 # https://algorithmsinsight.wordpress.com/graph-theory-2/a-star-in-general/implementing-a-star-to-solve-n-puzzle/
-def ManhattanScore(curr_state, size, finish_y, finish_x, y, x):
+def ScoreForOneTile(in_y, in_x, size):
+	dist_board = [[0 for i in range(size)] for i in range(size)]
+	filled = False
+	num = 1
 
-	calculate_state = [[0 for i in range(size)] for i in range(size)]
-	
-	calculate_state[finish_y][finish_x] = 1
-	while calculate_state[y][x] == 0:
+	if (in_y + 1 < size):
+		dist_board[in_y + 1][in_x] = 1;
+	if (in_y - 1 >= 0):
+		dist_board[in_y - 1][in_x] = 1;
+	if (in_x + 1 < size):
+		dist_board[in_y][in_x + 1] = 1;
+	if (in_x - 1 >= 0):
+		dist_board[in_y][in_x - 1] = 1;
+
+	while not filled:
+		filled = True
 		for y in range(size):
 			for x in range(size):
-				if calculate_state[y][x] != 0:
-					if (y + 1 < size and calculate_state[y + 1][x] == 0):
-						calculate_state[y + 1][x] = calculate_state[y][x] + 1;
-					if (y - 1 >= 0 and calculate_state[y - 1][x] == 0):
-						calculate_state[y - 1][x] = calculate_state[y][x] + 1;
-					if (x + 1 < size and calculate_state[y][x + 1] == 0):
-						calculate_state[y][x + 1] = calculate_state[y][x] + 1;
-					if (x - 1 >= 0 and calculate_state[y][x - 1] == 0):
-						calculate_state[y][x - 1] = calculate_state[y][x] + 1;
-	return calculate_state[finish_y][finish_x]
+				if dist_board[y][x] == num:
+					if (y + 1 < size and dist_board[y + 1][x] == 0):
+						dist_board[y + 1][x] = dist_board[y][x] + 1;
+						filled = False
+					if (y - 1 >= 0 and dist_board[y - 1][x] == 0):
+						dist_board[y - 1][x] = dist_board[y][x] + 1;
+						filled = False
+					if (x + 1 < size and dist_board[y][x + 1] == 0):
+						dist_board[y][x + 1] = dist_board[y][x] + 1;
+						filled = False
+					if (x - 1 >= 0 and dist_board[y][x - 1] == 0):
+						dist_board[y][x - 1] = dist_board[y][x] + 1;
+						filled = False
+		num += 1
+
+	dist_board[in_y][in_x] = 0
+	return sum(dist_board, [])
 
 
 # Calculate distancescore for all board
-# input: board and board_size
-def ManhattanDistance(curr_state, final_state, size):
-	total_score = 0
-	# total tiles
-	for i in range(size * size - 1):
-		for j in range(len(curr_state)):
-			if (curr_state[j] == i and curr_state[j] != final_state[j]):
-				finish_y = (i - 1) // size
-				finish_x = (i - 1) - finish_y * size
-				y = (j - 1) // size
-				x = (j - 1) - y * size
-				total_score += ManhattanScore(curr_state, size, finish_y, finish_x, y, x)
+# input: 1d array and int
+def ManhattanDistance(final_state, size):
+	# key : 1d array
+	distance_map = {}
 
-	return total_score
+	for i in range(len(final_state)):
+		y = i // size
+		x = i - y * size
+		distance_map[final_state[i]] = ScoreForOneTile(y, x, size)
+
+
+	# b = np.reshape(final_state, (-1, size))
+	# print("FINAL MAP : ")
+	# for i in b:
+	# 	print(i)
+
+	# for i in distance_map:
+	# 	b = np.reshape(distance_map[i], (-1, size))
+	# 	print (i, " : ")
+	# 	for i in b:
+	# 		print(i)
+
+
+	def CalculateScore(curr_state, final_state, size):
+		total_score = 0
+
+		for i in range(len(curr_state)):
+			dist_board = distance_map[curr_state[i]]
+			total_score += dist_board[i]
+		return total_score
+
+	return CalculateScore
+
+
+

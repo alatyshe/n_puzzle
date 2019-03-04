@@ -26,13 +26,32 @@ if __name__ == "__main__":
 			board = Parser.parse_string(puzzle_string)
 
 			algorithm = AStar(
-						metric=LinearConflicts, 
+						metric=ManhattanDistance(board["final_state"], board["size"]), 
 						start_state=board["state"], 
 						final_state=board["final_state"], 
 						size=board["size"])
 
 			result = algorithm.search()
 			print(result)
+
+			algorithm = AStar(
+						metric=HammingDistance,
+						start_state=board["state"], 
+						final_state=board["final_state"], 
+						size=board["size"])
+
+			result = algorithm.search()
+			print(result)
+
+			algorithm = AStar(
+						metric=LinearConflicts,
+						start_state=board["state"], 
+						final_state=board["final_state"], 
+						size=board["size"])
+
+			result = algorithm.search()
+			print(result)
+
 		else :
 			print("Usage:\n\tmain.py puzzle.txt")
 	except Exception as error:
