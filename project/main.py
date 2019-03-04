@@ -33,25 +33,31 @@ if __name__ == "__main__":
       result = algorithm.search()
       print(result)
 
-      print("HammingDistance : ")
-      algorithm = AStar(
-            metric=HammingDistance,
-            start_state=board["state"], 
-            final_state=board["final_state"], 
-            size=board["size"])
+      # print("HammingDistance : ")
+      # algorithm = AStar(
+      #       metric=HammingDistance,
+      #       start_state=board["state"], 
+      #       final_state=board["final_state"], 
+      #       size=board["size"])
 
-      result = algorithm.search()
-      print(result)
+      # result = algorithm.search()
+      # print(result)
 
-      print("LinearConflicts : ")
-      algorithm = AStar(
-            metric=LinearConflicts,
-            start_state=board["state"], 
-            final_state=board["final_state"], 
-            size=board["size"])
+      # print("LinearConflicts : ")
+      # algorithm = AStar(
+      #       metric=LinearConflicts,
+      #       start_state=board["state"], 
+      #       final_state=board["final_state"], 
+      #       size=board["size"])
 
-      result = algorithm.search()
-      print(result)
+      # result = algorithm.search()
+      # print(result)
+
+      print("state : ", board["state"])
+      for i in range(1, result["Move_num"] + 1):
+        print(result["Path"][-i][0])
+      print()
+
 
     else :
       print("Usage:\n\tmain.py puzzle.txt")
