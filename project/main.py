@@ -25,6 +25,7 @@ if __name__ == "__main__":
 
 			board = Parser.parse_string(puzzle_string)
 
+			print("ManhattanDistance : ")
 			algorithm = AStar(
 						metric=ManhattanDistance(board["final_state"], board["size"]), 
 						start_state=board["state"], 
@@ -34,6 +35,7 @@ if __name__ == "__main__":
 			result = algorithm.search()
 			print(result)
 
+			print("HammingDistance : ")
 			algorithm = AStar(
 						metric=HammingDistance,
 						start_state=board["state"], 
@@ -43,6 +45,7 @@ if __name__ == "__main__":
 			result = algorithm.search()
 			print(result)
 
+			print("LinearConflicts : ")
 			algorithm = AStar(
 						metric=LinearConflicts,
 						start_state=board["state"], 
