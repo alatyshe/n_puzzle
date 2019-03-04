@@ -38,9 +38,9 @@ var puzzle = {
 	}
 };
 
-if (!puzzle.solvable(puzzle.order)) {
-	puzzle.swap(0, 1);
-}
+// if (!puzzle.solvable(puzzle.order)) {
+// 	puzzle.swap(0, 1);
+// }
 
 const sleep = (milliseconds) => {
 	return new Promise(resolve => setTimeout(resolve, milliseconds))
@@ -76,6 +76,7 @@ function draw() {
 const moving = async(sequence) => {
 	for (var j = 0; j < sequence.length; j++) {
 
+		await sleep(1000);
 		if (puzzle.go(puzzle.Move[{39: 'left', 37: 'right', 40: 'up', 38: 'down'}[sequence[j]]])) {
 			// alert(move);
 
@@ -88,7 +89,6 @@ const moving = async(sequence) => {
 			//     box.style.backgroundColor = "gold";
 			// }
 		}
-		await sleep(1000);
 	}
 };
 

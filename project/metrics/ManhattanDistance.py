@@ -3,7 +3,7 @@
 
 import sys
 import array
-import numpy as np
+# import numpy as np
 from src.BoardLogic import BoardLogic
 
 # Calculate distance for single tile

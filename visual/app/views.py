@@ -1,6 +1,7 @@
 from app import app
 from flask import render_template
 import os
+import json
 
 
 @app.route('/')
@@ -11,12 +12,15 @@ def index():
 
 @app.route('/puzzle', methods=['GET', 'POST'])
 def visual():
+	coding = {'LEFT': 39, 'RIGHT': 37, 'UP': 40, 'DOWN': 38}
+
 	with open(os.path.join('app', 'db.txt')) as f:
-		data = [line.strip() for line in f.read().splitlines() if not line.startswith('#')]
-		size = data.pop(0)
-		elements = [int(element) for sub in data for element in sub.split()]
+		data = json.load(f)
+		size = data.get('size')
+		elements = data.get('state')
+		move = data.get('commands')
 
 	return render_template(
 		'puzzle.html', title='NPUZZLE', size=int(size),
-		elements=elements, move=[]
+		elements=elements, move=[coding.get(command.upper()) for command in move]
 	)

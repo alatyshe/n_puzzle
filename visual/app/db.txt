@@ -1,6 +1,1 @@
-# This puzzle is solvable
-4
- 3 11 12 14
- 7 10 13  2
- 5  9  1  6
- 8  4  0 15
+{"size": 3, "state": [1, 7, 8, 2, 5, 4, 3, 6, 0], "commands": ["LEFT", "LEFT", "UP", "UP", "RIGHT", "RIGHT", "DOWN", "LEFT", "LEFT", "UP", "RIGHT", "DOWN", "DOWN", "LEFT", "UP", "UP", "RIGHT", "DOWN", "DOWN", "RIGHT", "UP", "UP", "LEFT", "DOWN"]}
