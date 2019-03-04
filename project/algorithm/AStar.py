@@ -58,13 +58,12 @@ class AStar():
 					next_state = BoardLogic.make_move(self.curr_node.getState(), move, self.size)
 					next_state_string = ' '.join(str(i) for i in next_state)
 					if next_state_string not in self.all_nodes:
-						metric_value = self.metric(self.curr_node.getState(), self.final_state, self.size)
 						new_node = Node(
 								parent_state=self.curr_node.getState(),
 								current_state=next_state,
 								num_move=self.curr_node.getG() + 1,
 								move=move,
-								metric_value=self.metric(self.curr_node.getState(), self.final_state, self.size)
+								metric_value=self.metric(next_state, self.final_state, self.size)
 								)
 						self.all_nodes[new_node.getStateString()] = new_node
 						self.open_nodes.put((new_node.getF(), new_node.getStateString()))

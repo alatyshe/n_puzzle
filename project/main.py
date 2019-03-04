@@ -26,7 +26,7 @@ if __name__ == "__main__":
 			board = Parser.parse_string(puzzle_string)
 
 			algorithm = AStar(
-						metric=ManhattanDistance, 
+						metric=LinearConflicts, 
 						start_state=board["state"], 
 						final_state=board["final_state"], 
 						size=board["size"])
