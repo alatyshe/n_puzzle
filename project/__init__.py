@@ -1,4 +1,4 @@
-from .src import Board, Info, Node
+from .src import Board, Node
 
 from .algorithm import AStar
 
