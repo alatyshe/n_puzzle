@@ -3,12 +3,10 @@
 
 import sys
 import queue as Q
-# import numpy
 
 from algorithm.AStar import AStar
 
 from src.BoardLogic import BoardLogic
-from src.Info import Info
 from src.Node import Node
 from src.Parser import Parser
 

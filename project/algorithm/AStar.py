@@ -6,7 +6,7 @@ import time
 import queue as Q
 
 sys.path.append('..')
-from src import Info, Node, BoardLogic
+from src import Node, BoardLogic
 
 class AStar():
   def __init__(self, metric, start_state, final_state, size):
