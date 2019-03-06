@@ -24,19 +24,9 @@ if __name__ == "__main__":
 
       board = Parser.parse_string(puzzle_string)
 
-      # print("ManhattanDistance : ")
-      # algorithm = AStar(
-      #       metric=ManhattanDistance(board["final_state"], board["size"]), 
-      #       start_state=board["state"], 
-      #       final_state=board["final_state"], 
-      #       size=board["size"])
-
-      # result = algorithm.search()
-      # print(result)
-
-      print("HammingDistance : ")
+      print("ManhattanDistance : ")
       algorithm = AStar(
-            metric=HammingDistance,
+            metric=ManhattanDistance(board["final_state"], board["size"]), 
             start_state=board["state"], 
             final_state=board["final_state"], 
             size=board["size"])
@@ -44,15 +34,25 @@ if __name__ == "__main__":
       result = algorithm.search()
       print(result)
 
-      # print("LinearConflicts : ")
+      # print("HammingDistance : ")
       # algorithm = AStar(
-      #       metric=LinearConflicts,
+      #       metric=HammingDistance,
       #       start_state=board["state"], 
       #       final_state=board["final_state"], 
       #       size=board["size"])
 
       # result = algorithm.search()
       # print(result)
+
+      print("LinearConflicts : ")
+      algorithm = AStar(
+            metric=LinearConflicts,
+            start_state=board["state"], 
+            final_state=board["final_state"], 
+            size=board["size"])
+
+      result = algorithm.search()
+      print(result)
 
       with open('../visual/app/db.txt', 'w') as f:
       	db = {}

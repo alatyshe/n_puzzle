@@ -2,6 +2,7 @@ var json = JSON.parse(document.getElementById('searcher').getAttribute("data-jso
 
 var size = Math.pow(json['size'], 2);
 var array = json['elements'];
+var stop = false;
 
 
 var puzzle = {
@@ -38,19 +39,18 @@ var puzzle = {
 	}
 };
 
-// if (!puzzle.solvable(puzzle.order)) {
-// 	puzzle.swap(0, 1);
-// }
 
 const sleep = (milliseconds) => {
 	return new Promise(resolve => setTimeout(resolve, milliseconds))
 };
+
 
 var box = document.body.appendChild(document.createElement('div'));
 
 for (var i = 0; i < size; i++) {
 	box.appendChild(document.createElement('div'));
 }
+
 
 window.addEventListener('keydown', function(e) {
 	if (puzzle.go(puzzle.Move[{39: 'left', 37: 'right', 40: 'up', 38: 'down'}[e.keyCode]])) {
@@ -73,27 +73,40 @@ function draw() {
 	}
 }
 
+
 const moving = async(sequence) => {
 	for (var j = 0; j < sequence.length; j++) {
 
-		await sleep(1000);
-		if (puzzle.go(puzzle.Move[{39: 'left', 37: 'right', 40: 'up', 38: 'down'}[sequence[j]]])) {
-			// alert(move);
+		if (!stop) {
+			try {
+				var pause = document.getElementById("slider").elements.level.value;
+			}
+			catch (TypeError) {
+				var pause = 1500;
+			} 
 
-			draw();
-			// var move = document.getElementById('move');
-			// move.style.display = 'block';
-			// move.textContent = {37: 'left', 38: 'up', 39: 'right', 40: 'down'}[sequence[j]];
+			if (puzzle.go(puzzle.Move[{39: 'left', 37: 'right', 40: 'up', 38: 'down'}[sequence[j]]])) {
 
-			// if (puzzle.isCompleted()) {
-			//     box.style.backgroundColor = "gold";
-			// }
+				draw();
+				var move = document.getElementById('move');
+				move.style.display = 'block';
+				move.textContent = {37: 'left', 38: 'up', 39: 'right', 40: 'down'}[sequence[j]];
+
+				// if (puzzle.isCompleted()) {
+				//     box.style.backgroundColor = "gold";
+				// }
+			}
+			await sleep(pause);
 		}
 	}
 };
 
-if (json['move']) {
-	moving(json['move']);
+
+function start() {
+	if (json['move']) {
+		moving(json['move']);
+	}	
 }
+
 
 draw();

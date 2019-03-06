@@ -4,7 +4,7 @@
 import sys
 import array
 # import numpy as np
-from src.BoardLogic import BoardLogic
+# from src.BoardLogic import BoardLogic
 
 # Calculate distance for single tile
 # https://algorithmsinsight.wordpress.com/graph-theory-2/a-star-in-general/implementing-a-star-to-solve-n-puzzle/

@@ -21,6 +21,14 @@
                 border: solid 1px transparent;
             }
 
+            form {
+                width: calc(calc(var(--width) + calc(calc(var(--border) + var(--margin))*2))*var(--size));
+            }
+
+            #flying {
+                width: calc(calc(var(--width) + calc(calc(var(--border))*2))*var(--size));
+            }
+
             div > div {
                 display: inline-block;
                 width: var(--width);
@@ -31,6 +39,10 @@
                 font: bold 24px/100px Tahoma,sans;
                 border-radius: 10px;
                 background-color: whitesmoke;
+            }
+
+            #start, #stop {
+                width: calc(calc(calc(var(--width) + calc(calc(var(--margin))*2))*var(--size)) / 2)
             }
 
             #move {
@@ -56,6 +68,17 @@
                 }'
                 type="text/javascript" src="{{url_for('static', filename='puzzle.js')}}">
         </script>
+
+        <div id="switch">
+            <button id="start", type="button", value="clickme", onclick="stop=false;start();">Start</button>
+            <button id="stop", type="button", value="clickme", onclick="stop=true;">Stop</button>
+        </div>
+
+        <form id="slider", onsubmit="return false" oninput="level.value = flevel.valueAsNumber">
+            <input name="flevel" id="flying" type="range" min="0" max="3000" value="1500" step="10">
+            <output for="flying" name="level">1500</output>
+        </form>
+
         <div id="move"></div>
 	</body>
 </html>
