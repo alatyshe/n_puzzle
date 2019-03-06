@@ -52,20 +52,20 @@ for (var i = 0; i < size; i++) {
 }
 
 
-window.addEventListener('keydown', function(e) {
-	if (puzzle.go(puzzle.Move[{39: 'left', 37: 'right', 40: 'up', 38: 'down'}[e.keyCode]])) {
-		draw();
+// window.addEventListener('keydown', function(e) {
+// 	if (puzzle.go(puzzle.Move[{39: 'left', 37: 'right', 40: 'up', 38: 'down'}[e.keyCode]])) {
+// 		draw();
 
-		let move = document.getElementById('move');
-		move.style.display = 'block';
-		move.textContent = {37: 'left', 38: 'up', 39: 'right', 40: 'down'}[e.keyCode];
+// 		let move = document.getElementById('move');
+// 		move.style.display = 'block';
+// 		move.textContent = {37: 'left', 38: 'up', 39: 'right', 40: 'down'}[e.keyCode];
 
-		if (puzzle.isCompleted()) {
-			box.style.backgroundColor = "gold";
-			window.removeEventListener('keydown', arguments.callee);
-		}
-	}
-});
+// 		if (puzzle.isCompleted()) {
+// 			box.style.backgroundColor = "gold";
+// 			window.removeEventListener('keydown', arguments.callee);
+// 		}
+// 	}
+// });
 
 function draw() {
 	for (var i = 0, tile; tile = box.childNodes[i], i < size; i++) {
