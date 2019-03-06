@@ -4,7 +4,10 @@
 import sys
 import array
 from pprint import pprint
-from metrics.ManhattanDistance import ManhattanDistance
+try:
+	from metrics.ManhattanDistance import ManhattanDistance
+except ImportError:
+	from ManhattanDistance import ManhattanDistance
 
 # from src.BoardLogic import BoardLogic
 
