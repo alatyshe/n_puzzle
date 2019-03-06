@@ -3,7 +3,6 @@
 
 import sys
 import array
-from src.BoardLogic import BoardLogic
 
 # Just the total number of tiles that are in place
 # https://algorithmsinsight.wordpress.com/graph-theory-2/a-star-in-general/implementing-a-star-to-solve-n-puzzle/

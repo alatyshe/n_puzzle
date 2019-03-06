@@ -9,9 +9,9 @@ sys.path.append('..')
 from src import Node, BoardLogic
 
 class AStar():
-  def __init__(self, metric, start_state, final_state, size):
+  def __init__(self, metrics, start_state, final_state, size):
     # function
-    self.metric = metric
+    self.metrics = metrics
 
     # 1d int array
     self.final_state = final_state
@@ -27,12 +27,15 @@ class AStar():
     # https://www.bogotobogo.com/python/python_PriorityQueue_heapq_Data_Structure.php
     self.open_nodes = Q.PriorityQueue()
 
+
+    # metric_value = [for i(start_state, self.final_state, self.size) in metrics]
+
     self.curr_node = Node(
         parent_state=[],
         current_state=start_state,
         num_move=0,
         move="",
-        metric_value=self.metric(start_state, self.final_state, self.size)
+        metric_value=sum(i(start_state, self.final_state, self.size) for i in self.metrics)
         )
 
   def search(self):
@@ -63,7 +66,7 @@ class AStar():
                 current_state=next_state,
                 num_move=self.curr_node.getG() + 1,
                 move=move,
-                metric_value=self.metric(next_state, self.final_state, self.size)
+                metric_value=sum(i(next_state, self.final_state, self.size) for i in self.metrics)
                 )
             self.all_nodes[new_node.getStateString()] = new_node
             self.open_nodes.put((new_node.getF(), new_node.getStateString()))

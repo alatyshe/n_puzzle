@@ -4,13 +4,6 @@
 import sys
 import array
 from pprint import pprint
-try:
-	from metrics.ManhattanDistance import ManhattanDistance
-except ImportError:
-	from ManhattanDistance import ManhattanDistance
-
-# from src.BoardLogic import BoardLogic
-
 
 def LinearMap(curr_state, final_state, size):
 	map = {}
@@ -58,7 +51,7 @@ def LinearConflicts(curr_state, final_state, size):
 		if curr_state[i] != final_state[i]:
 			total_score += conflict(map=linear_map, tail=curr_state[i])
 
-	return ManhattanDistance(final_state, size)(curr_state, final_state, size) + total_score
+	return total_score
 
 
 if __name__ == '__main__':
