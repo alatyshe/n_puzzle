@@ -5,6 +5,21 @@ import sys
 import array
 from pprint import pprint
 
+
+conflicts = []
+
+# Get all linear conflicts in our board
+# https://algorithmsinsight.wordpress.com/graph-theory-2/a-star-in-general/implementing-a-star-to-solve-n-puzzle/
+def LinearConflicts(curr_state, final_state, size):
+	map = LinearMap(curr_state, final_state, size)
+
+	for i in range(size ** 2):
+		if curr_state[i] != final_state[i]:
+			conflict(map=map, tail=curr_state[i], size=size)
+
+	# print(set(conflicts))
+	return len(set(conflicts)) * 2
+
 def LinearMap(curr_state, final_state, size):
 	map = {}
 
@@ -18,42 +33,84 @@ def LinearMap(curr_state, final_state, size):
 	return map
 
 
-def conflict(map, tail):
-	col_diff = list(set(map[tail]['current']['col']) & set(map[tail]['final']['col']))
-	row_diff = list(set(map[tail]['current']['row']) & set(map[tail]['final']['row']))
+# def conflict(map, tail):
+# 	col_diff = list(set(map[tail]['current']['col']) & set(map[tail]['final']['col'])) if tail in map[tail]['final']['col'] else []
+# 	row_diff = list(set(map[tail]['current']['row']) & set(map[tail]['final']['row'])) if tail in map[tail]['final']['row'] else []
 
-	# column = [
-	# 	(e1, e2) for (e1, e2) in
-	# 	zip([e for e in map[tail]['current']['col'] if e in map[tail]['final']['col']],
-	# 		[e for e in map[tail]['final']['col'] if e in map[tail]['current']['col']])
-	# 	# (e1, e2) for (e1, e2) in zip(map[tail]['current']['col'], map[tail]['final']['col'])
-	# 	if e1 != e2 and (tail == e1 or tail == e2) and e1 in col_diff and e2 in col_diff
-	# ]
-	# row = [
-	# 	(e1, e2) for (e1, e2) in
-	# 	zip([e for e in map[tail]['current']['row'] if e in map[tail]['final']['row']],
-	# 		[e for e in map[tail]['final']['row'] if e in map[tail]['current']['row']])
-	# 	# (e1, e2) for (e1, e2) in zip(map[tail]['current']['row'], map[tail]['final']['row'])
-	# 	if e1 != e2 and (tail == e1 or tail == e2) and e1 in row_diff and e2 in row_diff
-	# ]
+# 	column = [
+# 		(e1, e2) for (e1, e2) in
+# 		zip([e for e in map[tail]['current']['col'] if e in map[tail]['final']['col']],
+# 			[e for e in map[tail]['final']['col'] if e in map[tail]['current']['col']])
+# 		# if e1 != e2
+# 		# (e1, e2) for (e1, e2) in zip(map[tail]['current']['col'], map[tail]['final']['col'])
+# 		if e1 != e2 and (tail == e1 or tail == e2) and e1 in col_diff and e2 in col_diff
+# 	]
+# 	row = [
+# 		(e1, e2) for (e1, e2) in
+# 		zip([e for e in map[tail]['current']['row'] if e in map[tail]['final']['row']],
+# 			[e for e in map[tail]['final']['row'] if e in map[tail]['current']['row']])
+# 		# if e1 != e2
+# 		# (e1, e2) for (e1, e2) in zip(map[tail]['current']['row'], map[tail]['final']['row'])
+# 		if e1 != e2 and (tail == e1 or tail == e2) and e1 in row_diff and e2 in row_diff
+# 	]
 
-	# pprint(col_diff)
-	# pprint(row_diff)
-	# print(tail, ':', list(set(column) | set(row)))
-	return 0
+# 	# pprint(col_diff)
+# 	# pprint(row_diff)
+# 	# print(tail, ':', list(set(column) | set(row)), coef)
+# 	coef = len(col_diff) % 2 + len(row_diff) % 2
+# 	result = len(list(set(column) | set(row)))
+# 	return result // 2 + coef if result else 0
 
 
-# Get all linear conflicts in our board
-# https://algorithmsinsight.wordpress.com/graph-theory-2/a-star-in-general/implementing-a-star-to-solve-n-puzzle/
-def LinearConflicts(curr_state, final_state, size):
-	total_score = 0
-	linear_map = LinearMap(curr_state, final_state, size)
+def conflict(map, tail, size):
+	global conflicts
 
-	for i in range(size ** 2):
-		if curr_state[i] != final_state[i]:
-			total_score += conflict(map=linear_map, tail=curr_state[i])
+	col_diff = list(set(map[tail]['current']['col']) & set(map[tail]['final']['col'])) if tail in map[tail]['final']['col'] else []
+	row_diff = list(set(map[tail]['current']['row']) & set(map[tail]['final']['row'])) if tail in map[tail]['final']['row'] else []
 
-	return total_score
+	current_col = map[tail]['current']['col']
+	current_row = map[tail]['current']['row']
+
+	final_col = map[tail]['final']['col']
+	final_row = map[tail]['final']['row']
+
+	for i, col in enumerate(col_diff):
+		try:
+			# print(col, col_diff[(i + 1) % size], 'current col:', current_col.index(col), ':', current_col.index(col_diff[(i + 1) % size]))
+			# print(col, col_diff[(i + 1) % size], 'final col:', final_col.index(col), ':', final_col.index(col_diff[(i + 1) % size]))
+			if (current_col.index(col) > current_col.index(col_diff[(i + 1) % size])\
+				and final_col.index(col) < final_col.index(col_diff[(i + 1) % size]))\
+				or (current_col.index(col) < current_col.index(col_diff[(i + 1) % size])\
+				and final_col.index(col) > final_col.index(col_diff[(i + 1) % size])):
+				conflicts += [col, col_diff[(i + 1) % size]]
+		except IndexError:
+			pass
+
+	for i, row in enumerate(row_diff):
+		try:
+			# print(row, row_diff[(i + 1) % size], 'current row:', current_row.index(row), ':', current_row.index(row_diff[(i + 1) % size]))
+			# print(row, row_diff[(i + 1) % size], 'final row:', final_row.index(row), ':', final_row.index(row_diff[(i + 1) % size]))
+			if (current_row.index(row) > current_row.index(row_diff[(i + 1) % size])\
+				and final_row.index(row) < final_row.index(row_diff[(i + 1) % size]))\
+				or (current_row.index(row) < current_row.index(row_diff[(i + 1) % size])\
+				and final_row.index(row) > final_row.index(row_diff[(i + 1) % size])):
+				conflicts += [row, row_diff[(i + 1) % size]]
+		except IndexError:
+			pass
+
+	# print(col_diff)
+	# print(row_diff)
+
+	# pprint(map[tail])
+	# print('---------------')
+
+# def conflict(curr_state, final_state, size):
+# 	for i in range(size):
+# 		for j in range(size):
+# 			try:
+# 				print(curr_state[i * size + j])
+# 			except IndexError:
+# 				pass
 
 
 if __name__ == '__main__':
@@ -81,3 +138,4 @@ if __name__ == '__main__':
 
 	# pprint(LinearMap(curr, final, 4))
 	print(LinearConflicts(curr, final, 3))
+	# conflict(curr, final, 3)

@@ -6,11 +6,6 @@ import json
 
 @app.route('/')
 @app.route('/index')
-def index():
-	return "Hello, World!"
-
-
-@app.route('/puzzle', methods=['GET', 'POST'])
 def visual():
 	coding = {'LEFT': 39, 'RIGHT': 37, 'UP': 40, 'DOWN': 38}
 

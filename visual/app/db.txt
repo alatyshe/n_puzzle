@@ -1,1 +1,1 @@
-{"size": 3, "state": [8, 7, 3, 1, 2, 6, 0, 4, 5], "commands": ["UP", "RIGHT", "UP", "RIGHT", "DOWN", "DOWN", "LEFT", "UP", "RIGHT", "UP", "LEFT", "LEFT", "DOWN", "DOWN", "RIGHT", "UP", "UP", "LEFT", "DOWN", "RIGHT", "RIGHT", "DOWN", "LEFT", "UP"]}
+{"size": 3, "state": [1, 7, 6, 8, 0, 3, 5, 4, 2], "commands": ["UP", "LEFT", "DOWN", "RIGHT", "RIGHT", "DOWN", "LEFT", "LEFT", "UP", "UP", "RIGHT", "DOWN", "RIGHT", "UP", "LEFT", "DOWN", "RIGHT", "DOWN", "LEFT", "UP"]}
