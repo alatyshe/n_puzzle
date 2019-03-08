@@ -11,6 +11,8 @@ conflicts = []
 # Get all linear conflicts in our board
 # https://algorithmsinsight.wordpress.com/graph-theory-2/a-star-in-general/implementing-a-star-to-solve-n-puzzle/
 def LinearConflicts(curr_state, final_state, size):
+	global conflicts
+
 	map = LinearMap(curr_state, final_state, size)
 
 	for i in range(size ** 2):
@@ -18,7 +20,9 @@ def LinearConflicts(curr_state, final_state, size):
 			conflict(map=map, tail=curr_state[i], size=size)
 
 	# print(set(conflicts))
-	return len(set(conflicts)) * 2
+	result = len(set(conflicts)) * 2
+	conflicts = []
+	return result
 
 def LinearMap(curr_state, final_state, size):
 	map = {}

@@ -36,7 +36,7 @@ if __name__ == "__main__":
 
     # print("HammingDistance : ")
     # algorithm = AStar(
-    #       metrics=HammingDistance,
+    #       metrics=[HammingDistance],
     #       start_state=board["state"], 
     #       final_state=board["final_state"], 
     #       size=board["size"])
