@@ -22,23 +22,25 @@ def conflict(map, tail):
 	col_diff = list(set(map[tail]['current']['col']) & set(map[tail]['final']['col']))
 	row_diff = list(set(map[tail]['current']['row']) & set(map[tail]['final']['row']))
 
-	column = [
-		(e1, e2) for (e1, e2) in
-		zip([e for e in map[tail]['current']['col'] if e in map[tail]['final']['col']],
-			[e for e in map[tail]['final']['col'] if e in map[tail]['current']['col']])
-		# (e1, e2) for (e1, e2) in zip(map[tail]['current']['col'], map[tail]['final']['col'])
-		if e1 != e2 and (tail == e1 or tail == e2) and e1 in col_diff and e2 in col_diff
-	]
-	row = [
-		(e1, e2) for (e1, e2) in
-		zip([e for e in map[tail]['current']['row'] if e in map[tail]['final']['row']],
-			[e for e in map[tail]['final']['row'] if e in map[tail]['current']['row']])
-		# (e1, e2) for (e1, e2) in zip(map[tail]['current']['row'], map[tail]['final']['row'])
-		if e1 != e2 and (tail == e1 or tail == e2) and e1 in row_diff and e2 in row_diff
-	]
+	# column = [
+	# 	(e1, e2) for (e1, e2) in
+	# 	zip([e for e in map[tail]['current']['col'] if e in map[tail]['final']['col']],
+	# 		[e for e in map[tail]['final']['col'] if e in map[tail]['current']['col']])
+	# 	# (e1, e2) for (e1, e2) in zip(map[tail]['current']['col'], map[tail]['final']['col'])
+	# 	if e1 != e2 and (tail == e1 or tail == e2) and e1 in col_diff and e2 in col_diff
+	# ]
+	# row = [
+	# 	(e1, e2) for (e1, e2) in
+	# 	zip([e for e in map[tail]['current']['row'] if e in map[tail]['final']['row']],
+	# 		[e for e in map[tail]['final']['row'] if e in map[tail]['current']['row']])
+	# 	# (e1, e2) for (e1, e2) in zip(map[tail]['current']['row'], map[tail]['final']['row'])
+	# 	if e1 != e2 and (tail == e1 or tail == e2) and e1 in row_diff and e2 in row_diff
+	# ]
 
+	# pprint(col_diff)
+	# pprint(row_diff)
 	# print(tail, ':', list(set(column) | set(row)))
-	return len(list(set(column) | set(row))) // 2
+	return 0
 
 
 # Get all linear conflicts in our board

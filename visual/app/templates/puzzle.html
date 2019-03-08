@@ -41,7 +41,7 @@
                 background-color: whitesmoke;
             }
 
-            #start, #stop {
+            #start, #pause {
                 width: calc(calc(calc(var(--width) + calc(calc(var(--margin))*2))*var(--size)) / 2)
             }
 
@@ -70,8 +70,8 @@
         </script>
 
         <div id="switch">
-            <button id="start", type="button", value="clickme", onclick="stop=false;start();">Start</button>
-            <button id="stop", type="button", value="clickme", onclick="stop=true;">Stop</button>
+            <button id="start", type="button", value="clickme", onclick="puzzle.Stop=false;start();">Start</button>
+            <button id="pause", type="button", value="clickme", onclick="puzzle.Stop=true;">Pause</button>
         </div>
 
         <form id="slider", onsubmit="return false" oninput="level.value = flevel.valueAsNumber">
