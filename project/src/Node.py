@@ -1,9 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import sys
-import array
-
 # Metrics
 import metrics.ManhattanDistance
 import metrics.LinearConflicts

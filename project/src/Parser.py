@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import sys
 import copy
 from .BoardLogic import BoardLogic
 
@@ -19,6 +18,23 @@ class Parser(object):
             input_state[j] != 0:
           inversions += 1
     return inversions
+
+  @staticmethod
+  def check_invariant(input_state, size):
+    # check invariant
+    # http://www.cs.bham.ac.uk/~mdr/teaching/modules04/java2/TilesSolvability.html
+    final_state = BoardLogic.create_puzzle(size)
+    inversions = Parser.inversions(input_state, size)
+    inversions += Parser.inversions(final_state, size)
+    if size % 2 == 0:
+      inversions += final_state.index(0) // size
+      inversions += input_state.index(0) // size
+    if inversions % 2 != 0:
+      raise ValueError(f"Error, Puzzle is unsolvable")  
+    return {"size" : size, 
+            "state" : input_state,
+            "final_state" : BoardLogic.create_puzzle(size)}
+
 
   @staticmethod
   def parse_string(string):
@@ -66,19 +82,6 @@ class Parser(object):
     for i in range(board_max_num):
       if sorted_input[i] >= sorted_input[i+1]:
         raise ValueError(f"Error, Invalid line: repeated numbers")
-
-    # check invariant
-    # http://www.cs.bham.ac.uk/~mdr/teaching/modules04/java2/TilesSolvability.html
-    final_state = BoardLogic.create_puzzle(size)
-    inversions = Parser.inversions(input_state, size)
-    inversions += Parser.inversions(final_state, size)
-    if size % 2 == 0:
-      inversions += final_state.index(0) // size
-      inversions += input_state.index(0) // size
-    if inversions % 2 != 0:
-      raise ValueError(f"Error, Puzzle is unsolvable")  
-    return {"size" : size, 
-            "state" : input_state,
-            "final_state" : BoardLogic.create_puzzle(size)}
+    return input_state, size
 
   

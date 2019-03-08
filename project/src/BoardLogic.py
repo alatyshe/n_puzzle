@@ -1,10 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import sys
 import copy
 
-class BoardLogic():
+class BoardLogic(object):
   def __init__():
     pass
 

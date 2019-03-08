@@ -2,14 +2,18 @@
 # -*- coding: utf-8 -*-
 
 import sys
+import os
 import json
 import queue as Q
 
+
+from pprint import pprint
 from algorithm.AStar import AStar
 
 from src.BoardLogic import BoardLogic
 from src.Node import Node
 from src.Parser import Parser
+from src.PuzzleGen import PuzzleGen
 
 from metrics.HammingDistance import HammingDistance
 from metrics.LinearConflicts import LinearConflicts
@@ -17,42 +21,44 @@ from metrics.ManhattanDistance import ManhattanDistance
 
 
 if __name__ == "__main__":
-  # try:
-  if len(sys.argv) > 1:
-    file = open(sys.argv[1], "r")
-    puzzle_string = file.read()
+  try:
+    if not argv[1] and not os.path.isfile(argv[1]):
+      parser = argparse.ArgumentParser()
+      parser.add_argument("-size", type=int, default=3, help="Size of the puzzle's side. Must be >3.")
+      parser.add_argument("-s", "-solvable", action="store_true", default=False, help="Forces generation of a solvable puzzle. Overrides -u.")
+      parser.add_argument("-u", "-unsolvable", action="store_true", default=False, help="Forces generation of an unsolvable puzzle")
+      parser.add_argument("-m", "-metric", type=int, default=1, help="\t0 = HammingDistance\n\t1 = ManhattanDistance\n\t2 = ManhattanDistance + LinearConflicts")
+      args = parser.parse_args()
 
-    board = Parser.parse_string(puzzle_string)
+      if args.solvable and args.unsolvable:
+        print ("Can't be both solvable AND unsolvable")
+        sys.exit(1)
+      elif args.solvable:
+        board, size = PuzzleGen.generate(args.size, True)
+      elif args.unsolvable:
+        board, size = PuzzleGen.generate(args.size, False)
+    else:
+      file = open(sys.argv[1], "r")
+      puzzle_string = file.read()
+      board, size = Parser.parse_string(puzzle_string)
 
-    print("ManhattanDistance : ")
+
+    Parser.check_invariant(board, size)
+
+    metrics = [
+      [HammingDistance],
+      [ManhattanDistance(board["final_state"], board["size"])],
+      [ManhattanDistance(board["final_state"], board["size"]), LinearConflicts]
+    ]
+
     algorithm = AStar(
-          metrics=[ManhattanDistance(board["final_state"], board["size"])],
+          metrics=metrics[metric_code],
           start_state=board["state"], 
           final_state=board["final_state"], 
           size=board["size"])
 
     result = algorithm.search()
-    print(result)
-
-    # print("HammingDistance : ")
-    # algorithm = AStar(
-    #       metrics=[HammingDistance],
-    #       start_state=board["state"], 
-    #       final_state=board["final_state"], 
-    #       size=board["size"])
-
-    # result = algorithm.search()
-    # print(result)
-
-    print("LinearConflicts : ")
-    algorithm = AStar(
-          metrics=[ManhattanDistance(board["final_state"], board["size"]), LinearConflicts],
-          start_state=board["state"], 
-          final_state=board["final_state"], 
-          size=board["size"])
-
-    result = algorithm.search()
-    print(result)
+    pprint(result)
 
     with open('../visual/app/db.txt', 'w') as f:
     	db = {}
@@ -63,8 +69,5 @@ if __name__ == "__main__":
     	  if result["Path"][-i][0]:
     	    db['commands'].append(result["Path"][-i][0].strip())
     	json.dump(db, f)
-
-  else :
-    print("Usage:\n\tmain.py puzzle.txt")
-  # except Exception as error:
-  #   print(error)
+  except Exception as error:
+    print(error)
